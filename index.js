@@ -1,4 +1,4 @@
-const app = require('../app');
+const app = require('./app');
 
 // Vercel serverless function handler – uses your Express app
 module.exports = (req, res) => {
