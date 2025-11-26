@@ -1,3 +1,4 @@
 const path = require('path');
 
-module.exports = path.dirname(process.mainModule.filename);
+// Resolves to the project root (one level above /util)
+module.exports = path.join(__dirname, '..');
