@@ -1,24 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+// Simple in-memory product store for Vercel demo
 
-const p = path.join(
-  path.dirname(process.mainModule.filename),
-  'data',
-  'products.json'
-);
-
-const getProductsFromFile = cb => {
-  fs.readFile(p, (err, fileContent) => {
-    if (err) {
-      cb([]);
-    } else {
-      cb(JSON.parse(fileContent));
-    }
-  });
-};
+const products = [];
 
 module.exports = class Product {
   constructor(title, imageUrl, description, price) {
+    this.id = Math.random().toString();
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
@@ -26,16 +12,10 @@ module.exports = class Product {
   }
 
   save() {
-    this.id = Math.random().toString();
-    getProductsFromFile(products => {
-      products.push(this);
-      fs.writeFile(p, JSON.stringify(products), err => {
-        console.log(err);
-      });
-    });
+    products.push(this);
   }
 
   static fetchAll(cb) {
-    getProductsFromFile(cb);
+    cb(products);
   }
 };
